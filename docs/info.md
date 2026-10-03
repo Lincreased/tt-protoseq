@@ -9,12 +9,13 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+Work in progress. The design is still the template example; a programmable GPIO
+protocol sequencer will replace it step by step, starting with a UART transmitter.
 
 ## How to test
 
-Explain how to use your project
+Not testable yet: there is no project logic beyond the template example.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+None.
