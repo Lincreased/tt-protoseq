@@ -49,3 +49,9 @@ Decision: a logic analyzer as the main instrument (it decodes UART, SPI and I2C)
 
 ### D-010. Does the ZedBoard design use the Zynq PS?
 Decision: no — PL only, programmed over JTAG; the PS is not configured. Why: keeps the board side to one RTL wrapper and one XDC; configuring the PS (DDR, MIO, clocks) is a separate project. Revisit if: we need the board's own USB-UART (if it is wired to the PS) or a CPU-side test harness. Step / date: 1 / 2026-10-03
+
+### D-011. Which tile size do we use?
+Decision: tiles "6x4" — the contest maximum; defined in tt-support-tools (tech/ihp-sg13cmos5l/tile_sizes.yaml).
+Why: the contest rules ask for 6x4; the template's info.yaml comment lists only older sizes (FACT-013).
+Revisit if: Jane Street opens 8x4 (they announced they are working on it).
+Step / date: 1 / 2026-10-04
