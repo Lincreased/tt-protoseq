@@ -44,14 +44,8 @@ Reason: template branches change (FACT-014); the template's `main` branch builds
 Review if: new commits appear in the template's cmos5l branch — compare the workflow using a diff.
 Step / date: 1 / 2026-10-03
 
-### D-008. Which language do project records use?
-Decision: English for everything under docs/ except pipeline.md — DECISIONS.md, verified_facts.md, metrics.md and docs/info.md. Chats and pipeline.md stay in Russian.
-Why: the repository is public (FACT-008), the competition is international, and records can be linked to the TT community as-is.
-Revisit if: keeping records in English starts to slow the work down.
-Step / date: 1 / 2026-10-03
-
 ### D-009. How do we observe signals on ZedBoard?
-Decision: a logic analyzer as the main instrument (it decodes UART, SPI and I2C), a USB-UART adapter for terminal checks and, later, for sending data into the design, and the Vivado ILA for signals inside the FPGA. Models: [❏ fill in: before step 3]; both external instruments must match the I/O voltage of the chosen ZedBoard connector. Why: the project is about multi-wire protocols, so the analyzer serves all of them; the ILA costs nothing and shows signals before the pin. Revisit if: the instruments cannot resolve the timing the frame definition requires. Step / date: 1 / 2026-10-03
+Decision: a logic analyzer as the main instrument (it decodes UART, SPI and I2C), a USB-UART adapter for terminal checks and, later, for sending data into the design, and the Vivado ILA for signals inside the FPGA. Devices: [❏ fill in: before step 3]; both external instruments must match the I/O voltage of the chosen ZedBoard connector. Why: the project is about multi-wire protocols, so the analyzer serves all of them; the ILA costs nothing and shows signals before the pin. Revisit if: the instruments cannot resolve the timing the frame definition requires. Step / date: 1 / 2026-10-03
 
 ### D-010. Does the ZedBoard design use the Zynq PS?
 Decision: no — PL only, programmed over JTAG; the PS is not configured. Why: keeps the board side to one RTL wrapper and one XDC; configuring the PS (DDR, MIO, clocks) is a separate project. Revisit if: we need the board's own USB-UART (if it is wired to the PS) or a CPU-side test harness. Step / date: 1 / 2026-10-03
