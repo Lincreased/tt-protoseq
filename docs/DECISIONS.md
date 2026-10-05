@@ -55,3 +55,9 @@ Decision: tiles "6x4" — the contest maximum; defined in tt-support-tools (tech
 Why: the contest rules ask for 6x4; the template's info.yaml comment lists only older sizes (FACT-013).
 Revisit if: Jane Street opens 8x4 (they announced they are working on it).
 Step / date: 1 / 2026-10-04
+
+### D-012. Where do we run the tests locally?
+Decision: the proof is the cocotb test in CI (job test on RTL, gl_test on the netlist). Locally: (1) a SystemVerilog testbench for the core in Vivado Simulator (xsim), for functional coverage, assertions and, later, agent-flow runs; it is optional — it does not gate a step, and its checks may be trimmed; (2) the same cocotb test with Icarus, installed when local debugging is needed (Linux or WSL, chosen at install time). No local gate-level runs in part 1. Vivado also builds the ZedBoard wrapper, constraints and bitstream (D-004).
+Why: one open CI test stays the proof (FACT-018, FACT-059); xsim adds coverage (FACT-020) and a second simulator on the same RTL, at the cost of a second testbench maintained by hand (FACT-062).
+Revisit if: the xsim testbench catches nothing beyond cocotb by the end of step 4, or keeping it in sync slows steps 3–4; debugging through pushes becomes routine (install cocotb locally); a gl_test failure cannot be understood from CI artifacts; the competition states a rule on verification tools.
+Step / date: 2 / 2026-10-05
