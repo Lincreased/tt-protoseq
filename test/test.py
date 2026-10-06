@@ -15,7 +15,7 @@ from cocotb.triggers import ClockCycles, FallingEdge
 SEL_SET_ID = 31
 SET_IDS = {0xA1: "A", 0xB2: "B", 0xC3: "C"}
 MEMBERS = {
-    "A": set(range(0, 15)) - {12},  # c00..c14
+    "A": set(range(0, 15)) - {7, 12},  # c00..c14
     "B": {0, 15},            # c00, c15 rom_unpacked
     "C": {0, 16},            # c00, c16 interface
 }
