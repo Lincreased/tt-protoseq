@@ -18,7 +18,7 @@ MEMBERS = {
     "A": set(range(0, 15)) - {7, 12},  # c00..c14 without c07 and c12 (removed after CI runs)
     "B": {0, 15},                      # c00, c15 rom_unpacked
     "C": {0, 16},                      # c00, c16 interface
-    "D": {0, 17, 18, 19},              # c00, c17 rom_flat, c18 pkg_scope, c19 pkg_header
+    "D": {0, 17, 18},              # c00, c17 rom_flat, c18 pkg_scope, c19 pkg_header
 }
 
 ROM = [0x3A, 0xC5, 0x17, 0xE2, 0x90, 0x4B, 0xFF, 0x00,

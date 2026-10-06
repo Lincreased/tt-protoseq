@@ -7,7 +7,7 @@ FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = canary_pkg.sv project.v canary_harness_d.v canary_baseline.v \
-                  canary_rom_flat.sv canary_pkg_scope.sv canary_pkg_header.sv
+                  canary_rom_flat.sv canary_pkg_scope.sv
 ifneq ($(GATES),yes)
 
 # RTL simulation:

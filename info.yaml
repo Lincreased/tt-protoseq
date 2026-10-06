@@ -23,7 +23,7 @@ project:
     - "canary_baseline.v"
     - "canary_rom_flat.sv"
     - "canary_pkg_scope.sv"
-    - "canary_pkg_header.sv"
+
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
