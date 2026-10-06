@@ -17,7 +17,24 @@ project:
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
+  - "canary_pkg.sv"
+  - "project.v"
+  - "canary_harness_a.v"
+  - "canary_baseline.v"
+  - "canary_ext_v.v"
+  - "canary_logic.sv"
+  - "canary_always_comb.sv"
+  - "canary_always_ff.sv"
+  - "canary_enum.sv"
+  - "canary_struct.sv"
+  - "canary_package.sv"
+  - "canary_param.sv"
+  - "canary_clog2.sv"
+  - "canary_generate.sv"
+  - "canary_rom_case.sv"
+  - "canary_rom_packed.sv"
+  - "canary_unique_case.sv"
+  - "canary_priority_case.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
