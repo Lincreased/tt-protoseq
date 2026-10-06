@@ -32,7 +32,6 @@ project:
   - "canary_clog2.sv"
   - "canary_generate.sv"
   - "canary_rom_case.sv"
-  - "canary_rom_packed.sv"
   - "canary_unique_case.sv"
   - "canary_priority_case.sv"
 

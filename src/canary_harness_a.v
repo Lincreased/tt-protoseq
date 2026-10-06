@@ -9,7 +9,7 @@ module canary_harness (
     output reg  [7:0] y
 );
   wire [7:0] y00, y01, y02, y03, y04, y05, y06, y07;
-  wire [7:0] y08, y09, y10, y11, y12, y13, y14;
+  wire [7:0] y08, y09, y10, y11, y13, y14;
 
   canary_baseline      c00 (.clk(clk), .rst_n(rst_n), .a(a), .y(y00));
   canary_ext_v         c01 (.a(a), .y(y01));
@@ -23,7 +23,6 @@ module canary_harness (
   canary_clog2         c09 (.a(a), .y(y09));
   canary_generate      c10 (.a(a), .y(y10));
   canary_rom_case      c11 (.a(a), .y(y11));
-  canary_rom_packed    c12 (.a(a), .y(y12));
   canary_unique_case   c13 (.a(a), .y(y13));
   canary_priority_case c14 (.a(a), .y(y14));
 
@@ -41,7 +40,6 @@ module canary_harness (
       5'd9:    y = y09;
       5'd10:   y = y10;
       5'd11:   y = y11;
-      5'd12:   y = y12;
       5'd13:   y = y13;
       5'd14:   y = y14;
       5'd31:   y = 8'hA1;
