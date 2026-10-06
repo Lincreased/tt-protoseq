@@ -6,11 +6,7 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = canary_pkg.sv project.v canary_harness_a.v canary_baseline.v \
-                  canary_ext_v.v canary_logic.sv canary_always_comb.sv canary_always_ff.sv \
-                  canary_enum.sv canary_struct.sv canary_param.sv \
-                  canary_clog2.sv canary_generate.sv canary_rom_case.sv \
-                  canary_unique_case.sv canary_priority_case.sv
+PROJECT_SOURCES = project.v canary_harness_b.v canary_baseline.v canary_rom_unpacked.sv
 
 ifneq ($(GATES),yes)
 
