@@ -27,7 +27,6 @@ project:
   - "canary_always_ff.sv"
   - "canary_enum.sv"
   - "canary_struct.sv"
-  - "canary_package.sv"
   - "canary_param.sv"
   - "canary_clog2.sv"
   - "canary_generate.sv"
