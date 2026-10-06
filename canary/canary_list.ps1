@@ -19,4 +19,7 @@ $Canaries = @(
     @{ Top = 'canary_priority_case'; Files = @('canary_priority_case.sv') }              # c14
     @{ Top = 'canary_rom_unpacked';  Files = @('canary_rom_unpacked.sv') }               # c15
     @{ Top = 'canary_interface';     Files = @('canary_interface.sv') }                  # c16
+    @{ Top = 'canary_rom_flat';      Files = @('canary_rom_flat.sv') }                   # c17
+    @{ Top = 'canary_pkg_scope';     Files = @('canary_pkg.sv', 'canary_pkg_scope.sv') }  # c18
+    @{ Top = 'canary_pkg_header';    Files = @('canary_pkg.sv', 'canary_pkg_header.sv') } # c19
 )

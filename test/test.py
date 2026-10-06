@@ -13,11 +13,12 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles, FallingEdge
 
 SEL_SET_ID = 31
-SET_IDS = {0xA1: "A", 0xB2: "B", 0xC3: "C"}
+SET_IDS = {0xA1: "A", 0xB2: "B", 0xC3: "C", 0xD4: "D"}
 MEMBERS = {
-    "A": set(range(0, 15)) - {7, 12},  # c00..c14
-    "B": {0, 15},            # c00, c15 rom_unpacked
-    "C": {0, 16},            # c00, c16 interface
+    "A": set(range(0, 15)) - {7, 12},  # c00..c14 without c07 and c12 (removed after CI runs)
+    "B": {0, 15},                      # c00, c15 rom_unpacked
+    "C": {0, 16},                      # c00, c16 interface
+    "D": {0, 17, 18, 19},              # c00, c17 rom_flat, c18 pkg_scope, c19 pkg_header
 }
 
 ROM = [0x3A, 0xC5, 0x17, 0xE2, 0x90, 0x4B, 0xFF, 0x00,
@@ -203,3 +204,21 @@ async def test_c15_rom_unpacked(dut):
 async def test_c16_interface(dut):
     """c16 interface (set C): y = ~a."""
     await check(dut, "c16 interface", 16, lambda a: ~a)
+
+
+@cocotb.test()
+async def test_c17_rom_flat(dut):
+    """c17 ROM on a flat localparam vector with an indexed part-select (set D)."""
+    await check(dut, "c17 rom_flat", 17, lambda a: ROM[a & 0x0F], vectors=NIBBLE_VECTORS)
+
+
+@cocotb.test()
+async def test_c18_pkg_scope(dut):
+    """c18 package constant by scope reference canary_pkg::K (set D): y = a ^ 0x3C."""
+    await check(dut, "c18 pkg_scope", 18, lambda a: a ^ 0x3C)
+
+
+@cocotb.test()
+async def test_c19_pkg_header(dut):
+    """c19 package import in the module header (set D): y = a ^ 0x3C."""
+    await check(dut, "c19 pkg_header", 19, lambda a: a ^ 0x3C)
