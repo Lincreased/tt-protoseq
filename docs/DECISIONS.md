@@ -61,3 +61,21 @@ Decision: the proof is the cocotb test in CI (job test on RTL, gl_test on the ne
 Why: one open CI test stays the proof (FACT-018, FACT-059); xsim adds coverage (FACT-020) and a second simulator on the same RTL, at the cost of a second testbench maintained by hand (FACT-062).
 Revisit if: the xsim testbench catches nothing beyond cocotb by the end of step 4, or keeping it in sync slows steps 3–4; debugging through pushes becomes routine (install cocotb locally); a gl_test failure cannot be understood from CI artifacts; the competition states a rule on verification tools.
 Step / date: 2 / 2026-10-05
+
+### D-013. How do we make gl_test work for designs with flip-flops?
+Decision: add the PDK's sg13cmos5l_udp.v to the gate-level sources in test/Makefile, one line before sg13cmos5l_stdcell.v.
+Why: the stdcell models instantiate UDPs (ihp_dff_r, ihp_mux2 and others) defined only in sg13cmos5l_udp.v; without it gl_test fails on any design with flip-flops (canary: gds run 37520166736 red, 37531242422 green after the change).
+Revisit if: the template's cmos5l branch changes test/Makefile upstream (take its version, D-007), or the PDK moves the UDPs.
+Step / date: 2 / 2026-10-07
+
+### D-014. Which SystemVerilog may the RTL use?
+Decision: Verilog-2005 plus logic, always_comb, always_ff, typedef enum (logic base type), typedef struct packed, parameter override and localparam, $clog2 in a localparam, generate for with a named block, unique case / priority case only when the case is full and its items do not overlap, a package used through pkg::name, ROM as a case statement or as a flat localparam vector read with +:. Not allowed: import in any form, unpacked localparam arrays and '{...} patterns, variable indexing of packed multidimensional arrays, interface; anything not listed stays out until a canary passes it in every tool. Files with SystemVerilog syntax use .sv and start with `default_nettype none; package files come first in source_files and PROJECT_SOURCES; local Vivado and xsim always read sources with -sv / --sv.
+Why: measured in the canary branch (canary/RESULTS.md): the CI tools (Yosys 0.55 port check, Verilator 5.046, Yosys 0.66, Icarus 12.0-2build2, gl_test) set the limits; Vivado and xsim accept everything once told to read SystemVerilog.
+Revisit if: a tool version changes (LibreLane image, Icarus from apt, the YoWASP pin, Vivado), or a step needs a construct outside the list — then a new canary first.
+Step / date: 2 / 2026-10-07
+
+### D-015. Which Yosys frontend do we use?
+Decision: keep the built-in Yosys Verilog frontend (LibreLane default, FACT-015).
+Why: no construct failed only in it: c15 and c16 also fail in Icarus 12, which runs the RTL in CI; import fails in the port check, which uses the built-in parser of Yosys 0.55 whatever the synthesis frontend (FACT-017).
+Revisit if: a construct needed for a step passes every other tool and fails only in Yosys synthesis.
+Step / date: 2 / 2026-10-07
