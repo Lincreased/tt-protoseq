@@ -79,3 +79,29 @@ Decision: keep the built-in Yosys Verilog frontend (LibreLane default, FACT-015)
 Why: no construct failed only in it: c15 and c16 also fail in Icarus 12, which runs the RTL in CI; import fails in the port check, which uses the built-in parser of Yosys 0.55 whatever the synthesis frontend (FACT-017).
 Revisit if: a construct needed for a step passes every other tool and fails only in Yosys synthesis.
 Step / date: 2 / 2026-10-07
+
+### D-016. UART TX frame definition
+Decision: All counts are clk cycles. k = 0 is the first rising edge of clk at which rst_n = 1;
+Out(k) is the TX pin value just after rising edge k. TX changes only just after a rising clk edge.
+- Clock: 50 MHz (CLOCK_PERIOD stays 20 ns, the template default).
+- Baud: nominal 115200; bit time D = 434 clk (8.680 us); actual 50 000 000 / 434 = 115 207.37 Bd,
+  error +0.0064 % vs 115200.
+- Frame (8N1): idle level 1; start bit 0 (D clk); 8 data bits, LSB first (D clk each);
+  no parity; 1 stop bit = 1 (D clk). Frame length 10*D = 4340 clk.
+- Symbol: 'A' = 0x41; line sequence (start, d0..d7, stop) = 0,1,0,0,0,0,0,1,0,1. Sent forever.
+- Pause: P = 434 clk of level 1 after the stop bit, before the next start bit;
+  frame period 10*D + P = 4774 clk.
+- Timing: TX = 1 while rst_n = 0 (after >= 1 rising edge with rst_n = 0) and for k = 0 .. P-1.
+  Frame n starts (first cycle of the start bit) at k_n = P + n*(10*D + P): 434, 5208, 9982, ...
+  Bit j of frame n (j = 0 start, 1..8 d0..d7, 9 stop) occupies k_n + j*D .. k_n + (j+1)*D - 1.
+  Reset during a frame: TX = 1 after >= 1 rising edge with rst_n = 0; on release the sequence
+  restarts at k = 0.
+- Tolerance in simulation: 0 clk; every bit lasts exactly D cycles.
+- Sampling (rule K1): the test reads TX at the falling edge of clk inside cycle k, which gives Out(k).
+- Pin: uo_out[4] = TX. All other outputs 0: uo_out[7:5], uo_out[3:0], uio_out = 0, uio_oe = 0.
+Why: fixed numbers give the test (#3T) an exact contract with no tolerance; 8N1 at 115200
+  matches the project example, and D is a core parameter, so a clock change touches one number.
+Revisit if: a CMOS5L clock recommendation appears (FACT-121); the demo board does not match the
+  TT UART pinout (FACT-122); the analyzer or USB-UART adapter (D-009) cannot handle 115200;
+  timing__setup__ws or timing__hold__ws < 0 at 20 ns.
+Step / date: 3 / 2026-10-08
