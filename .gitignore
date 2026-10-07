@@ -3,6 +3,8 @@
 *.vcd
 *.fst
 *.fst.hier
+canary_logs.zip
+xvlog.pb
 runs
 tt_submission
 src/user_config.json
@@ -12,3 +14,4 @@ test/__pycache__/
 test/results.xml
 test/gate_level_netlist.v
 canary/logs/
+canary_logs_txt/
