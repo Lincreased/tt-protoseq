@@ -44,6 +44,10 @@ Reason: template branches change (FACT-014); the template's `main` branch builds
 Review if: new commits appear in the template's cmos5l branch — compare the workflow using a diff.
 Step / date: 1 / 2026-10-03
 
+### D-008. Which language do project records use? — withdrawn
+Status: withdrawn on 2026-10-04.
+Why: the language of records is a formatting convention, not a project decision. The number is not reused.
+
 ### D-009. How do we observe signals on ZedBoard?
 Decision: a logic analyzer as the main instrument (it decodes UART, SPI and I2C), a USB-UART adapter for terminal checks and, later, for sending data into the design, and the Vivado ILA for signals inside the FPGA. Devices: [❏ fill in: before step 3]; both external instruments must match the I/O voltage of the chosen ZedBoard connector. Why: the project is about multi-wire protocols, so the analyzer serves all of them; the ILA costs nothing and shows signals before the pin. Revisit if: the instruments cannot resolve the timing the frame definition requires. Step / date: 1 / 2026-10-03
 
