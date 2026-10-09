@@ -24,10 +24,10 @@ module tt_um_Lincreased_protoseq (
     .clk  (clk),
     .rst_n(rst_n),
     .tx   (tx)
-  )
+  );
   // All outputs must be assigned. If not used, assign to 0. 
   // D-016: uo_out[4] = TX, all other outputs 0.
-  assign uo_out = {3'b000, tx, 4'b000};
+  assign uo_out = {3'b000, tx, 4'b0000};
   assign uio_out = 0;
   assign uio_oe  = 0;
 
