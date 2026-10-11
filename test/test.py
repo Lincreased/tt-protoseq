@@ -24,9 +24,9 @@ from cocotb.triggers import FallingEdge, RisingEdge
 # ===========================================================================
 TX_PORT = "uo_out"   # D-016 Pin: TX = uo_out[4]
 TX_BIT = 4
-BIT_CLKS = 434       # D-016 Baud: D, clk cycles per bit
+BIT_CLKS = 435       # D-016 Baud: D, clk cycles per bit
 PAUSE_CLKS = 434     # D-016 Pause: P, clk cycles of level 1 after the stop bit
-SYMBOL = 0x42        # D-016 Symbol: 'A'
+SYMBOL = 0x41        # D-016 Symbol: 'A'
 TOL_CLK = 0          # D-016 Tolerance: 0 clk (only 0 is defined, see check_config)
 
 # Test setup, not part of the frame definition.
