@@ -105,3 +105,17 @@ Revisit if: a CMOS5L clock recommendation appears (FACT-121); the demo board doe
   TT UART pinout (FACT-122); the analyzer or USB-UART adapter (D-009) cannot handle 115200;
   timing__setup__ws or timing__hold__ws < 0 at 20 ns.
 Step / date: 3 / 2026-10-08
+
+### D-017. UART core naming and structure
+Decision: the core is module uart_tx_hardcoded in src/uart_tx_hardcoded.sv; parameters BIT_CLKS and
+PAUSE_CLKS (defaults 434 and 434); the symbol 'A' is a localparam; reset is synchronous (rst_n active
+low, tx = 1 after at least one rising edge with rst_n = 0); tx comes straight from a flop. The top
+module passes both parameters explicitly and contains no logic. info.yaml source_files and
+test/Makefile PROJECT_SOURCES list the core first, with the .sv extension.
+Why: the name states what the module is; D and P as parameters keep a clock or baud change to one
+number (D-016). Synchronous reset kept over asynchronous: the gds run at 8ef9baeb is green with
+measured numbers and there is no recovery/removal risk on rst_n.
+Revisit if: the programmable machine (step 4) replaces the core; the symbol or frame must change;
+the synchronous reset costs noticeable area once the flip-flop count grows (the only mapped
+flip-flop, sg13cmos5l_dfrbpq_1, has an asynchronous reset input).
+Step / date: 3 / 2026-10-11
