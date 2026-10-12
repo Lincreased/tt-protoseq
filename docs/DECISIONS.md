@@ -119,3 +119,15 @@ Revisit if: the programmable machine (step 4) replaces the core; the symbol or f
 the synchronous reset costs noticeable area once the flip-flop count grows (the only mapped
 flip-flop, sg13cmos5l_dfrbpq_1, has an asynchronous reset input).
 Step / date: 3 / 2026-10-11
+
+### D-018. When do cocotb tests change inputs and read outputs? (candidate K1)
+Decision: K1 becomes rule T14 for every cocotb test from step 3 on: inputs (rst_n, ena, ui_in, uio_in) are written only right after a falling clk edge; outputs (uo_out, uio_out, uio_oe) are read only at a falling clk edge. The only exception is the initial values set before the clock starts (T4). For the UART frame test, k = 0 (D-016) is the rising edge that follows the falling edge at which rst_n is written to 1; Out(k) is read at the falling edge inside cycle k, as D-016 states.
+Why: no write or read lands on a rising edge, so results do not depend on event order at that edge in Icarus 12/13 or in the cell models; the step-2 canary test used this scheme and passed on RTL and netlist (gds 37531242422, 37546124499).
+Revisit if: a test needs an input that changes on a rising edge or asynchronously to clk; gate-level simulation with timing annotation is introduced (a half-period read becomes a timing assumption).
+Step / date: 3 / 2026-10-12
+
+### D-019. May tests check outputs while rst_n = 0?
+Decision: yes, where the design definition states reset behaviour (D-016): from the falling edge after the first rising edge with rst_n = 0 that the test itself awaited, at every falling edge while rst_n = 0 — in the initial reset and in a reset during a frame. T5 is narrowed to: nothing is checked before that first rising edge. "All other outputs 0" (D-016) is read with the same timing.
+Why: D-016 defines outputs during reset; T5 only has to keep checks away from values before reset takes effect, and the first-edge condition does that.
+Revisit if: a definition stops specifying outputs during reset; gl_test shows X on an output after the first reset edge.
+Step / date: 3 / 2026-10-12
